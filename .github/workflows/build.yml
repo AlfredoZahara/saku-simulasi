@@ -32,12 +32,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install Android SDK
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Extract source code
+        run: unzip SakuSimulasiAndroid.zip
+
       - name: Build APK
-        run: gradle --no-daemon assembleDebug
+        run: |
+          cd SakuSimulasiAndroid
+          gradle --no-daemon assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Saku-Simulasi-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
-          
+          path: SakuSimulasiAndroid/app/build/outputs/apk/debug/app-debug.apk
